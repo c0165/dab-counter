@@ -1,0 +1,279 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .wrap {
+    font-family: 'DM Sans', var(--font-sans);
+    max-width: 380px;
+    margin: 1.5rem auto;
+    padding: 0 1rem 1.5rem;
+    background: #F5F3FF;
+    border-radius: 28px;
+    border: 1.5px solid #DDD9F7;
+  }
+
+  .header {
+    text-align: center;
+    padding: 2rem 1rem 1.25rem;
+  }
+  .header-emoji { font-size: 36px; display: block; margin-bottom: 8px; }
+  .header-title {
+    font-size: 22px;
+    font-weight: 500;
+    color: #4A4580;
+    letter-spacing: -0.3px;
+  }
+  .header-sub {
+    font-size: 12px;
+    color: #8E8BB5;
+    margin-top: 5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .pill {
+    background: #E4E1F7;
+    color: #4A4580;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    border-radius: 99px;
+    padding: 2px 8px;
+  }
+
+  .counter-card {
+    background: #EDEAF9;
+    border: 1px solid #D4D0F0;
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .counter-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #8E8BB5;
+    margin-bottom: 10px;
+  }
+  .counter-num {
+    font-size: 100px;
+    font-weight: 500;
+    color: #2E2B5F;
+    line-height: 1;
+    word-break: break-all;
+    letter-spacing: -4px;
+  }
+  .counter-caption {
+    font-size: 12px;
+    font-style: italic;
+    color: #8E8BB5;
+    margin-top: 10px;
+  }
+
+  .btn-dab {
+    width: 100%;
+    background: #6B65B5;
+    color: #F5F3FF;
+    border: none;
+    border-radius: 16px;
+    padding: 1rem;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'DM Sans', var(--font-sans);
+    cursor: pointer;
+    margin-bottom: 10px;
+    letter-spacing: -0.1px;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .btn-dab:hover { background: #534AB7; }
+  .btn-dab:active { transform: scale(0.97); }
+
+  .btn-row { display: flex; gap: 8px; margin-bottom: 12px; }
+  .btn-small {
+    flex: 1;
+    background: #EDEAF9;
+    border: 1px solid #D4D0F0;
+    border-radius: 12px;
+    padding: 0.6rem;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'DM Sans', var(--font-sans);
+    color: #6B65B5;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-small:hover { background: #DDD9F7; }
+
+  .sync-card {
+    background: #EDEAF9;
+    border: 1px solid #D4D0F0;
+    border-radius: 14px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .sync-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #7BBFA5;
+    flex-shrink: 0;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .sync-text { font-size: 12px; color: #8E8BB5; line-height: 1.5; }
+  .sync-text strong { color: #4A4580; font-size: 13px; font-weight: 500; display: block; }
+
+  .history-toggle {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: #8E8BB5;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: 'DM Sans', var(--font-sans);
+    padding: 4px 0;
+  }
+  .history-toggle:hover { color: #4A4580; }
+  .history {
+    margin-top: 0.5rem;
+    max-height: 130px;
+    overflow-y: auto;
+    font-size: 12px;
+    color: #8E8BB5;
+    border-top: 1px solid #D4D0F0;
+    padding-top: 0.5rem;
+  }
+  .history-item { padding: 4px 0; border-bottom: 1px solid #E4E1F7; color: #6B65B5; }
+  .history-item strong { color: #4A4580; }
+
+  .tagline {
+    text-align: center;
+    font-size: 12px;
+    font-style: italic;
+    color: #B0ADCF;
+    margin-top: 0.75rem;
+  }
+</style>
+
+<h2 style="position:absolute;left:-9999px">Noodle's Dab Counter — shared dab debt tracker</h2>
+
+<div class="wrap">
+  <div class="header">
+    <span class="header-emoji">🍜</span>
+    <div class="header-title">noodle's dab counter</div>
+    <div class="header-sub">global debt tracker <span class="pill">live</span></div>
+  </div>
+
+  <div class="counter-card">
+    <div class="counter-label">dabs owed</div>
+    <div class="counter-num" id="count">0</div>
+    <div class="counter-caption">the debt is real.</div>
+  </div>
+
+  <button class="btn-dab" onclick="addDab()">
+    <i class="ti ti-plus" aria-hidden="true"></i> +1 dab owed
+  </button>
+
+  <div class="btn-row">
+    <button class="btn-small" onclick="undoDab()"><i class="ti ti-arrow-back-up" aria-hidden="true"></i> undo</button>
+    <button class="btn-small" onclick="resetCounter()"><i class="ti ti-refresh" aria-hidden="true"></i> reset</button>
+  </div>
+
+  <div class="sync-card">
+    <div class="sync-dot"></div>
+    <div class="sync-text">
+      <strong>syncing live</strong>
+      <span id="last-sync">waiting...</span>
+    </div>
+  </div>
+
+  <button class="history-toggle" onclick="toggleHistory()">view history</button>
+  <div class="history" id="history" style="display:none"></div>
+
+  <div class="tagline">"the dab debt always comes due."</div>
+</div>
+
+<script>
+const STORAGE_KEY = 'dab-count';
+const HISTORY_KEY = 'dab-history';
+let count = 0, history = [], historyVisible = false, isSaving = false;
+
+function render() {
+  document.getElementById('count').textContent = count;
+  if (historyVisible) renderHistory();
+}
+
+function updateSync() {
+  document.getElementById('last-sync').textContent =
+    'last synced ' + new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+
+async function saveToStorage() {
+  isSaving = true;
+  try {
+    await window.storage.set(STORAGE_KEY, String(count), true);
+    await window.storage.set(HISTORY_KEY, JSON.stringify(history.slice(-50)), true);
+  } catch(e) {}
+  updateSync();
+  setTimeout(() => { isSaving = false; }, 1000);
+}
+
+async function pollStorage() {
+  if (isSaving) return;
+  try {
+    const res = await window.storage.get(STORAGE_KEY, true);
+    if (res) { const s = parseInt(res.value)||0; if (s !== count) { count = s; render(); } }
+    const hRes = await window.storage.get(HISTORY_KEY, true);
+    if (hRes) { const s = JSON.parse(hRes.value)||[]; if (s.length !== history.length) { history = s; if (historyVisible) renderHistory(); } }
+  } catch(e) {}
+  updateSync();
+}
+
+async function addDab() {
+  count++;
+  history.push({ action: '+1', count, time: new Date().toLocaleTimeString() });
+  render(); await saveToStorage();
+}
+
+async function undoDab() {
+  if (count > 0) { count--; history.push({ action: 'undo', count, time: new Date().toLocaleTimeString() }); render(); await saveToStorage(); }
+}
+
+async function resetCounter() {
+  if (!confirm('reset the dab counter to 0?')) return;
+  count = 0; history.push({ action: 'reset', count: 0, time: new Date().toLocaleTimeString() });
+  render(); await saveToStorage();
+}
+
+function toggleHistory() {
+  historyVisible = !historyVisible;
+  document.getElementById('history').style.display = historyVisible ? 'block' : 'none';
+  if (historyVisible) renderHistory();
+}
+
+function renderHistory() {
+  const el = document.getElementById('history');
+  if (!history.length) { el.innerHTML = '<div style="padding:4px 0;color:#B0ADCF">no actions yet</div>'; return; }
+  el.innerHTML = [...history].reverse().map(h =>
+    `<div class="history-item">${h.time} — <strong>${h.action}</strong> → ${h.count} dabs</div>`
+  ).join('');
+}
+
+(async () => {
+  try { const r = await window.storage.get(STORAGE_KEY, true); if (r) count = parseInt(r.value)||0; } catch(e) {}
+  try { const r = await window.storage.get(HISTORY_KEY, true); if (r) history = JSON.parse(r.value)||[]; } catch(e) {}
+  render(); updateSync();
+})();
+
+setInterval(pollStorage, 3000);
+</script>

@@ -348,7 +348,7 @@
       return;
     }
  
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+    supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
  
     try {
       count = await fetchCount();

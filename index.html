@@ -6,188 +6,37 @@
   <title>Noodle's Dab Counter</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
- 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: #EFECFF;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 1rem;
-    }
- 
-    .wrap {
-      width: 100%;
-      max-width: 400px;
-      background: #F5F3FF;
-      border-radius: 28px;
-      border: 1.5px solid #DDD9F7;
-      padding: 0 1.25rem 1.5rem;
-    }
- 
-    .header {
-      text-align: center;
-      padding: 2rem 1rem 1.25rem;
-    }
+    body { font-family: 'DM Sans', sans-serif; background: #EFECFF; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; }
+    .wrap { width: 100%; max-width: 400px; background: #F5F3FF; border-radius: 28px; border: 1.5px solid #DDD9F7; padding: 0 1.25rem 1.5rem; }
+    .header { text-align: center; padding: 2rem 1rem 1.25rem; }
     .header-emoji { font-size: 38px; display: block; margin-bottom: 8px; }
     .header-title { font-size: 22px; font-weight: 500; color: #4A4580; letter-spacing: -0.3px; }
-    .header-sub {
-      font-size: 12px;
-      color: #8E8BB5;
-      margin-top: 5px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-    .pill {
-      background: #E4E1F7;
-      color: #4A4580;
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      border-radius: 99px;
-      padding: 2px 8px;
-    }
- 
-    .counter-card {
-      background: #EDEAF9;
-      border: 1px solid #D4D0F0;
-      border-radius: 20px;
-      padding: 2rem 1.5rem;
-      text-align: center;
-      margin-bottom: 12px;
-    }
-    .counter-label {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #8E8BB5;
-      margin-bottom: 10px;
-    }
-    .counter-num {
-      font-size: 100px;
-      font-weight: 500;
-      color: #2E2B5F;
-      line-height: 1;
-      word-break: break-all;
-      letter-spacing: -4px;
-    }
-    .counter-caption {
-      font-size: 12px;
-      font-style: italic;
-      color: #8E8BB5;
-      margin-top: 10px;
-    }
- 
-    .btn-dab {
-      width: 100%;
-      background: #6B65B5;
-      color: #F5F3FF;
-      border: none;
-      border-radius: 16px;
-      padding: 1rem;
-      font-size: 16px;
-      font-weight: 500;
-      font-family: 'DM Sans', sans-serif;
-      cursor: pointer;
-      margin-bottom: 10px;
-      transition: background 0.15s, transform 0.1s;
-    }
+    .header-sub { font-size: 12px; color: #8E8BB5; margin-top: 5px; letter-spacing: 0.06em; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .pill { background: #E4E1F7; color: #4A4580; font-size: 10px; font-weight: 500; letter-spacing: 0.05em; border-radius: 99px; padding: 2px 8px; }
+    .counter-card { background: #EDEAF9; border: 1px solid #D4D0F0; border-radius: 20px; padding: 2rem 1.5rem; text-align: center; margin-bottom: 12px; }
+    .counter-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #8E8BB5; margin-bottom: 10px; }
+    .counter-num { font-size: 100px; font-weight: 500; color: #2E2B5F; line-height: 1; word-break: break-all; letter-spacing: -4px; }
+    .counter-caption { font-size: 12px; font-style: italic; color: #8E8BB5; margin-top: 10px; }
+    .btn-dab { width: 100%; background: #6B65B5; color: #F5F3FF; border: none; border-radius: 16px; padding: 1rem; font-size: 16px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; margin-bottom: 10px; transition: background 0.15s, transform 0.1s; }
     .btn-dab:hover { background: #534AB7; }
     .btn-dab:active { transform: scale(0.97); }
- 
     .btn-row { display: flex; gap: 8px; margin-bottom: 12px; }
-    .btn-small {
-      flex: 1;
-      background: #EDEAF9;
-      border: 1px solid #D4D0F0;
-      border-radius: 12px;
-      padding: 0.65rem;
-      font-size: 13px;
-      font-weight: 500;
-      font-family: 'DM Sans', sans-serif;
-      color: #6B65B5;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
+    .btn-small { flex: 1; background: #EDEAF9; border: 1px solid #D4D0F0; border-radius: 12px; padding: 0.65rem; font-size: 13px; font-weight: 500; font-family: 'DM Sans', sans-serif; color: #6B65B5; cursor: pointer; transition: background 0.15s; }
     .btn-small:hover { background: #DDD9F7; }
- 
-    .sync-card {
-      background: #EDEAF9;
-      border: 1px solid #D4D0F0;
-      border-radius: 14px;
-      padding: 0.75rem 1rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    .sync-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: #7BBFA5;
-      flex-shrink: 0;
-      animation: pulse 2s infinite;
-    }
+    .sync-card { background: #EDEAF9; border: 1px solid #D4D0F0; border-radius: 14px; padding: 0.75rem 1rem; display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .sync-dot { width: 7px; height: 7px; border-radius: 50%; background: #7BBFA5; flex-shrink: 0; animation: pulse 2s infinite; }
     .sync-dot.error { background: #E24B4A; animation: none; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
     .sync-text { font-size: 12px; color: #8E8BB5; line-height: 1.5; }
     .sync-text strong { color: #4A4580; font-size: 13px; font-weight: 500; display: block; }
- 
-    .history-toggle {
-      display: block;
-      width: 100%;
-      text-align: center;
-      font-size: 12px;
-      color: #8E8BB5;
-      cursor: pointer;
-      background: none;
-      border: none;
-      font-family: 'DM Sans', sans-serif;
-      padding: 4px 0;
-      transition: color 0.15s;
-    }
+    .history-toggle { display: block; width: 100%; text-align: center; font-size: 12px; color: #8E8BB5; cursor: pointer; background: none; border: none; font-family: 'DM Sans', sans-serif; padding: 4px 0; transition: color 0.15s; }
     .history-toggle:hover { color: #4A4580; }
- 
-    .history {
-      margin-top: 0.5rem;
-      max-height: 140px;
-      overflow-y: auto;
-      font-size: 12px;
-      color: #8E8BB5;
-      border-top: 1px solid #D4D0F0;
-      padding-top: 0.5rem;
-    }
+    .history { margin-top: 0.5rem; max-height: 140px; overflow-y: auto; font-size: 12px; color: #8E8BB5; border-top: 1px solid #D4D0F0; padding-top: 0.5rem; }
     .history-item { padding: 4px 0; border-bottom: 1px solid #E4E1F7; color: #6B65B5; }
     .history-item strong { color: #4A4580; }
- 
-    .tagline {
-      text-align: center;
-      font-size: 12px;
-      font-style: italic;
-      color: #B0ADCF;
-      margin-top: 0.75rem;
-    }
- 
-    .setup-banner {
-      background: #FFF3CD;
-      border: 1px solid #FFD88A;
-      border-radius: 14px;
-      padding: 0.85rem 1rem;
-      font-size: 12px;
-      color: #7A5C00;
-      margin-bottom: 12px;
-      line-height: 1.6;
-    }
-    .setup-banner strong { display: block; margin-bottom: 2px; color: #5A4200; }
+    .tagline { text-align: center; font-size: 12px; font-style: italic; color: #B0ADCF; margin-top: 0.75rem; }
   </style>
 </head>
 <body>
@@ -197,25 +46,16 @@
     <div class="header-title">noodle's dab counter</div>
     <div class="header-sub">global debt tracker <span class="pill">live</span></div>
   </div>
- 
-  <div id="setup-banner" class="setup-banner" style="display:none">
-    <strong>⚠️ setup needed</strong>
-    Open this file and replace <code>YOUR_SUPABASE_URL</code> and <code>YOUR_SUPABASE_ANON_KEY</code> with your project values. See the README instructions below.
-  </div>
- 
   <div class="counter-card">
     <div class="counter-label">dabs owed</div>
     <div class="counter-num" id="count">—</div>
     <div class="counter-caption">the debt is real.</div>
   </div>
- 
   <button class="btn-dab" onclick="addDab()">+ 1 dab owed</button>
- 
   <div class="btn-row">
     <button class="btn-small" onclick="undoDab()">↩ undo</button>
     <button class="btn-small" onclick="resetCounter()">↺ reset</button>
   </div>
- 
   <div class="sync-card">
     <div class="sync-dot" id="sync-dot"></div>
     <div class="sync-text">
@@ -223,163 +63,98 @@
       <span id="last-sync">please wait</span>
     </div>
   </div>
- 
   <button class="history-toggle" onclick="toggleHistory()">view history</button>
   <div class="history" id="history" style="display:none"></div>
- 
   <div class="tagline">"the dab debt always comes due."</div>
 </div>
- 
+
+<!-- Supabase loaded at the bottom so it's ready before our script runs -->
+<script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
-  // ─────────────────────────────────────────────
-  // 🔧 REPLACE THESE TWO VALUES WITH YOUR OWN
-  // Get them from supabase.com → your project → Settings → API
   const SUPABASE_URL  = 'https://foegjexujgtrspolupen.supabase.co';
   const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZvZWdqZXh1amd0cnNwb2x1cGVuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3MTQ2NjgsImV4cCI6MjA5NDI5MDY2OH0.Yju1CNEY-37dOoj5QiWtdVp3nCGVn8YkrAN_aB8redw';
-  // ─────────────────────────────────────────────
- 
   const COUNTER_ID = 'noodle-dab-counter';
-  let count = 0;
-  let localHistory = [];
-  let historyVisible = false;
-  let supabase;
- 
-  function isConfigured() {
-    return SUPABASE_URL !== 'YOUR_SUPABASE_URL' && SUPABASE_ANON !== 'YOUR_SUPABASE_ANON_KEY';
-  }
- 
+
+  let db, count = 0, localHistory = [], historyVisible = false;
+
   function setSync(status, detail) {
     const titles = { ok: 'syncing live', error: 'connection error', connecting: 'connecting...' };
     document.getElementById('sync-title').textContent = titles[status] || status;
     document.getElementById('last-sync').textContent = detail || '';
-    const dot = document.getElementById('sync-dot');
-    dot.className = 'sync-dot' + (status === 'error' ? ' error' : '');
+    document.getElementById('sync-dot').className = 'sync-dot' + (status === 'error' ? ' error' : '');
   }
- 
-  function renderCount() {
-    document.getElementById('count').textContent = count;
-  }
- 
+
+  function renderCount() { document.getElementById('count').textContent = count; }
+  function nowTime() { return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }); }
+
   function renderHistory() {
     const el = document.getElementById('history');
-    if (!localHistory.length) {
-      el.innerHTML = '<div style="padding:4px 0;color:#B0ADCF">no actions yet</div>';
-      return;
-    }
+    if (!localHistory.length) { el.innerHTML = '<div style="padding:4px 0;color:#B0ADCF">no actions yet</div>'; return; }
     el.innerHTML = [...localHistory].reverse().map(h =>
       `<div class="history-item">${h.time} — <strong>${h.action}</strong> → ${h.count} dabs</div>`
     ).join('');
   }
- 
+
   function toggleHistory() {
     historyVisible = !historyVisible;
     document.getElementById('history').style.display = historyVisible ? 'block' : 'none';
     if (historyVisible) renderHistory();
   }
- 
-  function nowTime() {
-    return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-  }
- 
+
   async function fetchCount() {
-    const { data, error } = await supabase
-      .from('dab_counter')
-      .select('value')
-      .eq('id', COUNTER_ID)
-      .single();
+    const { data, error } = await db.from('dab_counter').select('value').eq('id', COUNTER_ID).single();
     if (error) throw error;
     return data ? data.value : 0;
   }
- 
+
   async function pushCount(newCount, action) {
-    const { error } = await supabase
-      .from('dab_counter')
-      .upsert({ id: COUNTER_ID, value: newCount, updated_at: new Date().toISOString() });
+    const { error } = await db.from('dab_counter').upsert({ id: COUNTER_ID, value: newCount, updated_at: new Date().toISOString() });
     if (error) throw error;
     localHistory.push({ action, count: newCount, time: nowTime() });
     if (historyVisible) renderHistory();
     setSync('ok', 'last synced ' + nowTime());
   }
- 
+
   async function addDab() {
-    try {
-      count++;
-      renderCount();
-      await pushCount(count, '+1');
-    } catch (e) {
-      count--;
-      renderCount();
-      setSync('error', 'could not save — check connection');
-    }
+    try { count++; renderCount(); await pushCount(count, '+1'); }
+    catch (e) { count--; renderCount(); setSync('error', 'could not save: ' + e.message); }
   }
- 
+
   async function undoDab() {
     if (count <= 0) return;
-    try {
-      count--;
-      renderCount();
-      await pushCount(count, 'undo');
-    } catch (e) {
-      count++;
-      renderCount();
-      setSync('error', 'could not save — check connection');
-    }
+    try { count--; renderCount(); await pushCount(count, 'undo'); }
+    catch (e) { count++; renderCount(); setSync('error', 'could not save: ' + e.message); }
   }
- 
+
   async function resetCounter() {
     if (!confirm('reset the dab counter to 0?')) return;
     const prev = count;
-    try {
-      count = 0;
-      renderCount();
-      await pushCount(0, 'reset');
-    } catch (e) {
-      count = prev;
-      renderCount();
-      setSync('error', 'could not save — check connection');
-    }
+    try { count = 0; renderCount(); await pushCount(0, 'reset'); }
+    catch (e) { count = prev; renderCount(); setSync('error', 'could not save: ' + e.message); }
   }
- 
+
   async function init() {
-    if (!isConfigured()) {
-      document.getElementById('setup-banner').style.display = 'block';
-      document.getElementById('count').textContent = '?';
-      setSync('error', 'not configured yet');
-      return;
-    }
- 
-    supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
- 
     try {
+      db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
       count = await fetchCount();
       renderCount();
       setSync('ok', 'last synced ' + nowTime());
+      db.channel('dab-realtime')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'dab_counter', filter: `id=eq.${COUNTER_ID}` }, payload => {
+          if (payload.new && payload.new.value !== undefined) {
+            count = payload.new.value;
+            renderCount();
+            setSync('ok', 'last synced ' + nowTime());
+          }
+        })
+        .subscribe();
     } catch (e) {
-      setSync('error', 'could not connect to database');
+      setSync('error', e.message || 'could not connect');
       document.getElementById('count').textContent = '!';
-      return;
     }
- 
-    // Realtime subscription — updates instantly when anyone changes the count
-    supabase
-      .channel('dab-realtime')
-      .on('postgres_changes', {
-        event: '*',
-        schema: 'public',
-        table: 'dab_counter',
-        filter: `id=eq.${COUNTER_ID}`
-      }, payload => {
-        if (payload.new && payload.new.value !== undefined) {
-          count = payload.new.value;
-          renderCount();
-          setSync('ok', 'last synced ' + nowTime());
-        }
-      })
-      .subscribe();
   }
- 
-  init();
+
+  window.addEventListener('load', init);
 </script>
 </body>
 </html>
- 
